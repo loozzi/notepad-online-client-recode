@@ -8,11 +8,11 @@ import Sidebar from '../Widget/Sidebar/Sidebar';
 function Private(props) {
   const isLoggedIn = localStorage.getItem('refreshToken');
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     history.push(`/${routes.LOGIN}`);
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      history.push(`/${routes.LOGIN}`);
+    }
+  }, [isLoggedIn]);
 
   return (
     <div>

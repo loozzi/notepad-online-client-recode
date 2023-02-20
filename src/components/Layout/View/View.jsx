@@ -36,7 +36,7 @@ function View(props) {
         toast.success(data.message);
       } else if (data.code === 401) {
         setCurrentNote({
-          username: currentUser.username,
+          username: data.elements.note.username,
           title: data.elements.note.title,
           body: 'Content is locked',
           permalink: currentNote,
@@ -62,8 +62,8 @@ function View(props) {
         toast.error(data.message);
       }
     };
-    if (!!currentUser) fetch();
-  }, [password, currentUser]);
+    fetch();
+  }, [password]);
   return (
     <>
       <Header />
