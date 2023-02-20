@@ -1,0 +1,44 @@
+.searchbar {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--color-gray);
+    border-radius: 16px;
+    overflow: hidden;;
+    background-color: transparent;
+
+    &-top {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    &-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+
+    &-input {
+        flex: 1;
+        padding: 8px 16px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        max-width: 560px;
+        border-radius: 16px;
+        background-color: transparent;
+    }
+
+    &-icon {
+        color: var(--color4);
+        padding: 8px 12px;
+        &:hover {
+            cursor: pointer;
+            color: var(--color3);
+        }
+    }
+
+}

@@ -1,0 +1,42 @@
+.popup {
+    position: relative;
+    cursor: pointer;
+    
+    &-icon {
+        margin-right: 4px;
+    }
+
+    &-menu {
+        position: absolute;
+        top: 100;
+        right: -16px;
+        display: none;
+        flex-direction: column;
+        width: 120px;
+        border-radius: 4px;
+        background-color: 1px solid var(--color3);
+    }
+    
+    &-btn {
+        padding: 8px 12px;
+        border: none;
+        font-weight: 600;
+        border-radius: 4px;
+        display: flex;
+        justify-content: flex-start;
+
+        &:hover {
+            background-color: var(--color4);
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+    &:hover &-menu {
+        display: flex;
+    }
+
+    &:hover {
+        color: var(--color3);
+    }
+}
