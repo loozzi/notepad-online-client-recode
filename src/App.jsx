@@ -29,9 +29,9 @@ function App() {
           <Route path={routes.CATEGORY} element={<Category />} />
           <Route path={routes.ALL} element={<All />} />
           <Route path={routes.LOGOUT} element={<Logout />} />
-
-          <Route element={<Home />} />
         </Route>
+
+        <Route path="/*" element={<Home />} />
       </Routes>
     </div>
   );
