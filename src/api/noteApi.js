@@ -1,4 +1,5 @@
 import axiosClient from './axiosClient';
+import Cookies from 'js-cookie';
 
 const baseUrl = 'note/';
 
@@ -14,35 +15,59 @@ const noteApi = {
   },
   getAll({ page, limit }) {
     const url = baseUrl + 'all';
+    const accessToken = Cookies.get('accessToken') || '';
     return axiosClient.get(url, {
-      params: { page: page, limit: limit },
+      params: { page: page, limit: limit, accessToken: accessToken },
     });
   },
   create({ title, body, tags, password }) {
     const url = baseUrl;
-    return axiosClient.post(url, {
-      title: title,
-      body: body,
-      tags: tags,
-      password: password,
-    });
+    const accessToken = Cookies.get('accessToken') || '';
+    return axiosClient.post(
+      url,
+      {
+        title: title,
+        body: body,
+        tags: tags,
+        password: password,
+      },
+      {
+        params: { accessToken: accessToken },
+      }
+    );
   },
   edit({ permalink, title, body, tags, password }) {
     const url = baseUrl;
-    return axiosClient.put(url, {
-      title: title,
-      permalink: permalink,
-      body: body,
-      tags: tags,
-      newPassword: password,
-    });
+    const accessToken = Cookies.get('accessToken') || '';
+    return axiosClient.put(
+      url,
+      {
+        title: title,
+        permalink: permalink,
+        body: body,
+        tags: tags,
+        newPassword: password,
+      },
+      {
+        params: {
+          accessToken: accessToken,
+        },
+      }
+    );
   },
   delete({ permalink, password }) {
     const url = baseUrl;
-    return axiosClient.delete(url, {
-      permalink: permalink,
-      password: password,
-    });
+    const accessToken = Cookies.get('accessToken') || '';
+    return axiosClient.delete(
+      url,
+      {
+        permalink: permalink,
+        password: password,
+      },
+      {
+        params: { accessToken: accessToken },
+      }
+    );
   },
 };
 

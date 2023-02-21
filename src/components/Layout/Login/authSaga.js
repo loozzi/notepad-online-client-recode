@@ -6,6 +6,7 @@ import tokenApi from '../../../api/tokenApi';
 import { history } from '../../../utils/history';
 import routes from '../../../utils/routes';
 import { toast } from 'react-toastify';
+import cookie from 'react-cookies';
 
 function* handleLogin(payload) {
   try {
@@ -16,7 +17,9 @@ function* handleLogin(payload) {
       const expires = new Date();
       expires.setTime(expires.getTime() + 1800 * 1000);
 
-      document.cookie = `accessToken=${resLogin.elements.accessToken};max-age=1800;samesite`;
+      cookie.save('accessToken', resLogin.elements.accessToken, {
+        maxAge: 1800,
+      });
 
       const resUserData = yield call(userApi.getMe);
       if (resUserData.code === 200) {
@@ -30,7 +33,7 @@ function* handleLogin(payload) {
           autoClose: 3000,
         });
         setTimeout(() => {
-          history.push(routes.HOME);
+          history.push('/');
         }, 3000);
       } else {
         localStorage.removeItem('refreshToken');

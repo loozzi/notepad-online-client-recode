@@ -1,5 +1,6 @@
 import axios from 'axios';
 import tokenApi from './tokenApi';
+import cookie from 'react-cookies';
 
 axios.defaults.withCredentials = true;
 
@@ -30,7 +31,12 @@ axiosClient.interceptors.request.use(
         const refreshToken = localStorage.getItem('refreshToken') || '';
         const res = await tokenApi.generate({ refreshToken });
         if (res.code === 200) {
-          document.cookie = `accessToken=${res.elements.accessToken};max-age=1800;samesite`;
+          // document.cookie = `accessToken=${res.elements.accessToken};max-age=1800;domain=.vast-erin-tuna-suit.cyclic.app;path=/`;
+          cookie.save('accessToken', res.elements.accessToken, {
+            maxAge: 1800,
+            domain: '.vast-erin-tuna-suit.cyclic',
+            path: '/',
+          });
         } else {
           localStorage.removeItem('refreshToken');
           document.cookie = '';
@@ -39,7 +45,6 @@ axiosClient.interceptors.request.use(
     } catch (err) {
       return Promise.reject(err);
     }
-
     return config;
   },
   (error) => {
