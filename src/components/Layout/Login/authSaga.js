@@ -78,9 +78,8 @@ function* watchLoggingFlow() {
       const resUserData = yield call(userApi.getMe);
       if (resUserData.code === 200) {
         yield put(authActions.loginSuccess(resUserData.elements.user));
-        try {
+        if (history.location.pathname === `/${routes.LOGIN}`)
           yield put(history.push('/'));
-        } catch (e) {}
         yield take(authActions.logout.type);
         yield call(handleLogout);
       } else {
