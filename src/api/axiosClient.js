@@ -5,8 +5,8 @@ import cookie from 'react-cookies';
 axios.defaults.withCredentials = true;
 
 const axiosClient = axios.create({
-  baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
-  // baseURL: 'http://localhost:3001/api/v1/',
+  // baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
+  baseURL: 'http://localhost:3001/api/v1/',
   headers: {
     'content-type': 'application/json',
   },

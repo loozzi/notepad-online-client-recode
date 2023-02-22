@@ -61,3 +61,20 @@ pre {
   white-space: pre-wrap; /* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
   word-wrap: break-word; /* IE 5.5+ */
 }
+
+/* Tablet: 740px <= width < 1024px */
+@media only screen and (max-width: 63.9375em) and (min-width: 46.25em) {
+  html {
+    --sidebar-width: 54px;
+  }
+
+}
+
+
+/* Mobile: width < 740px */
+
+@media only screen and (max-width: 46.1875em) {
+  html {
+    --sidebar-width: 54px;
+  }
+}

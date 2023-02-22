@@ -14,7 +14,6 @@ function Panel(props) {
   const { data } = props;
   const [currentNote, setCurrentNote] = useState('');
   const [currentNoteData, setCurrentNoteData] = useState({});
-
   const currentUser = useAppSelector(selectCurrentUser);
 
   const handleChangeCurrentNote = (idx) => {

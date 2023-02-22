@@ -62,7 +62,7 @@ function Header(props) {
         {isLoggedIn && (
           <div
             className={cx('header-right-dropdown', {
-              'header-right-dropdown--active': isShowPopup,
+              // 'header-right-dropdown--active': isShowPopup,
             })}
           >
             <NavLink

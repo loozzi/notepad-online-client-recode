@@ -119,3 +119,38 @@
         transform: translateX(100%);
     }
 }
+
+/* Tablet: 740px <= width < 1024px */
+@media only screen and (max-width: 63.9375em) and (min-width: 46.25em) {
+    .header {
+        &-left {
+            width: 160px;
+        }
+    }
+}
+
+
+/* Mobile: width < 740px */
+
+@media only screen and (max-width: 46.1875em) {
+    .header {
+        &-left {
+            &--icon {
+                width: var(--sidebar-width);
+            }
+
+            &--text {
+                display: none;
+            }
+        }
+
+        &-right {
+            &-dropdown {
+                &--link {
+                    padding: 12px;
+                }
+            }
+        }
+    }
+    
+}

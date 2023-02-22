@@ -3,11 +3,13 @@ import styles from './NotePreview.module.scss';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import noteApi from '../../../api/noteApi';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function NotePreview(props) {
   const { data } = props;
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const reFormatTime = (time) => {
     let date = new Date(time);
@@ -44,6 +46,7 @@ function NotePreview(props) {
 
       if (resData.code === 200) {
         toast.success(resData.message);
+        setIsDeleted(true);
       } else {
         toast.error(resData.message);
       }
@@ -52,41 +55,45 @@ function NotePreview(props) {
     fetchDelete();
   };
 
-  return (
-    <div className={cx('note-preview')}>
-      <div className={cx('note-preview-header')}>
-        <NavLink to={`/view/${data.permalink}`}>{data.title}</NavLink>
-      </div>
-      <div className={cx('note-preview-body')}>
-        <span>{reFomatDataBody(data.body)}</span>
-      </div>
-      <div className={cx('note-preview-footer')}>
-        <div className={cx('note-preview-footer-wrapper')}>
-          {reFormatTime(data.created_at)} - {data.view} views
+  if (!isDeleted) {
+    return (
+      <div className={cx('note-preview')}>
+        <div className={cx('note-preview-header')}>
+          <NavLink to={`/view/${data.permalink}`}>{data.title}</NavLink>
         </div>
-        <div className={cx('note-preview-footer-wrapper')}>
-          <div
-            className={cx('note-preview-footer--link')}
-            onClick={handleDeleteClick}
-          >
-            Delete
+        <div className={cx('note-preview-body')}>
+          <span>{reFomatDataBody(data.body)}</span>
+        </div>
+        <div className={cx('note-preview-footer')}>
+          <div className={cx('note-preview-footer-wrapper')}>
+            {reFormatTime(data.created_at)} - {data.view} views
           </div>
-          <NavLink
-            to={`/edit/${data.permalink}`}
-            className={cx('note-preview-footer--link')}
-          >
-            Edit
-          </NavLink>
-          <NavLink
-            to={`/view/${data.permalink}`}
-            className={cx('note-preview-footer--link')}
-          >
-            See more
-          </NavLink>
+          <div className={cx('note-preview-footer-wrapper')}>
+            <div
+              className={cx('note-preview-footer--link')}
+              onClick={handleDeleteClick}
+            >
+              Delete
+            </div>
+            <NavLink
+              to={`/edit/${data.permalink}`}
+              className={cx('note-preview-footer--link')}
+            >
+              Edit
+            </NavLink>
+            <NavLink
+              to={`/view/${data.permalink}`}
+              className={cx('note-preview-footer--link')}
+            >
+              See more
+            </NavLink>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <></>;
+  }
 }
 
 export default NotePreview;

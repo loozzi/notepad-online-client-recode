@@ -30,3 +30,28 @@
         }
     }
 }
+
+/* Tablet: 740px <= width < 1024px */
+@media only screen and (max-width: 63.9375em) and (min-width: 46.25em) {
+    .sidebar {
+        &-item {
+            &--label {
+                display: none;
+            }
+        }
+    }
+
+}
+
+
+/* Mobile: width < 740px */
+
+@media only screen and (max-width: 46.1875em) {
+    .sidebar {
+        &-item {
+            &--label {
+                display: none;
+            }
+        }
+    }
+}
