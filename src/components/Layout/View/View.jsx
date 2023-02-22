@@ -33,6 +33,7 @@ function View(props) {
       if (data.code === 200) {
         setPasswordConfirm(true);
         setCurrentNote(data.elements.note);
+        document.title = data.elements.note.title;
         toast.success(data.message);
       } else if (data.code === 401) {
         setCurrentNote({
@@ -44,6 +45,7 @@ function View(props) {
           created_at: data.elements.note.created_at,
           view: data.elements.note.view,
         });
+        document.title = data.elements.note.title;
         toast.warning(data.message);
         setPasswordConfirm(false);
         const pwd = prompt('Enter your note password');
@@ -68,7 +70,7 @@ function View(props) {
     <>
       <Header />
       <div className={cx('view')}>
-        <NoteView data={currentNote} />
+        <NoteView data={currentNote} onlyView />
       </div>
     </>
   );

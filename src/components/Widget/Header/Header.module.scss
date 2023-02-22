@@ -88,6 +88,11 @@
             &--icon {
                 margin-right: 12px;
             }
+
+            &--active {
+                animation: slideIn 0.2s ease-in-out;
+                transform: translateX(0);
+            }
         }
 
         &:hover &-dropdown {

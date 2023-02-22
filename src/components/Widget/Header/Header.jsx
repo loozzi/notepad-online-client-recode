@@ -1,26 +1,27 @@
-import classNames from 'classnames/bind';
-import { NavLink } from 'react-router-dom';
-import routes from '../../../utils/routes';
-import Searchbar from '../Searchbar/Searchbar';
-import styles from './Header.module.scss';
-import logo from './logo.svg';
-import { useAppSelector } from '../../../app/hook';
-import {
-  selectCurrentUser,
-  selectIsLoggedIn,
-} from '../../../components/Layout/Login/authSlice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCaretDown,
   faRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../../app/hook';
+import {
+  selectCurrentUser,
+  selectIsLoggedIn,
+} from '../../../components/Layout/Login/authSlice';
 import { history } from '../../../utils/history';
+import routes from '../../../utils/routes';
+import Searchbar from '../Searchbar/Searchbar';
+import styles from './Header.module.scss';
+import logo from './logo.svg';
 
 const cx = classNames.bind(styles);
 
 function Header(props) {
+  const [isShowPopup, setIsShopPopup] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const currentUser = useAppSelector(selectCurrentUser);
 
@@ -36,7 +37,7 @@ function Header(props) {
       <div
         onClick={() => {
           isLoggedIn
-            ? history.push(`/${currentUser.username}`)
+            ? setIsShopPopup(!isShowPopup)
             : history.push(`/${routes.LOGIN}`);
         }}
         className={cx('header-right')}
@@ -59,7 +60,11 @@ function Header(props) {
         />
 
         {isLoggedIn && (
-          <div className={cx('header-right-dropdown')}>
+          <div
+            className={cx('header-right-dropdown', {
+              'header-right-dropdown--active': isShowPopup,
+            })}
+          >
             <NavLink
               to={`/${currentUser.username}`}
               className={cx('header-right-dropdown--link')}

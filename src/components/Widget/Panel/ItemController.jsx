@@ -13,6 +13,9 @@ const reFormatTime = (time) => {
     diff = diff * 60;
     diff = Math.floor(diff);
     return `${diff} minutes ago`;
+  } else if (diff < 24) {
+    diff = Math.floor(diff);
+    return `${diff} hours ago`;
   } else if (diff <= 24 * 7) {
     diff = Math.floor(diff / 7);
     return `${diff} days ago`;

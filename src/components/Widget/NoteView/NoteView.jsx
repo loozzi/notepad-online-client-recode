@@ -3,12 +3,15 @@ import styles from './NoteView.module.scss';
 import Input from '../Input';
 import Button from '../Button';
 import NotePopupButton from '../NotePopupButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import noteApi from '../../../api/noteApi';
 import { toast } from 'react-toastify';
 import { history } from '../../../utils/history';
+import TextareaAutosize from 'react-textarea-autosize';
+import { useAppSelector } from '../../../app/hook';
+import { selectCurrentUser } from '../../Layout/Login/authSlice';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +22,7 @@ function NoteView(props) {
   const [category, setCategory] = useState('');
   const [password, setPassword] = useState('');
 
+  const currentUser = useAppSelector(selectCurrentUser) || { username: '' };
   const reFormatTime = (time) => {
     let date = new Date(time);
     if (isCreatePage) {
@@ -169,13 +173,17 @@ function NoteView(props) {
             By: {data.username} - {reFormatTime(data.created_at)} - {data.view}{' '}
             views
           </span>
-          <textarea
-            className={cx('note-header-title')}
-            value={title}
-            disabled={onlyView}
-            placeholder="Enter your title..."
-            onChange={handleChangeTitle}
-          />
+          {onlyView ? (
+            <pre className={cx('note-header-title')}>{title}</pre>
+          ) : (
+            <TextareaAutosize
+              className={cx('note-header-title')}
+              value={title}
+              disabled={onlyView}
+              placeholder="Enter your title..."
+              onChange={handleChangeTitle}
+            />
+          )}
         </div>
         {!isCreatePage && !isEditPage && (
           <div className={cx('note-header-wrapper')}>
@@ -186,21 +194,33 @@ function NoteView(props) {
               <FontAwesomeIcon icon={faShare} />
               <span className={cx('note-header-btn-text')}>Share</span>
             </button>
-            <NotePopupButton permalink={data.permalink} />
+            {currentUser.username === data.username && (
+              <NotePopupButton permalink={data.permalink} />
+            )}
           </div>
         )}
       </div>
-      <textarea
-        className={cx('note-body')}
+      {/* <TextareaAutosize
         value={body}
-        onChange={handleChangeBody}
-        placeholder="Enter your text..."
-        disabled={onlyView}
-      />
+        ref={textareaRef}
+        onChange={handleChange}
+      ></TextareaAutosize> */}
+
+      {onlyView ? (
+        <pre className={cx('note-body')}>{body}</pre>
+      ) : (
+        <TextareaAutosize
+          className={cx('note-body')}
+          value={body}
+          onChange={handleChangeBody}
+          placeholder="Enter your text..."
+          disabled={onlyView}
+        />
+      )}
       {(isCreatePage || isEditPage) && (
         <div className={cx('note-footer')}>
           <div className={cx('note-footer-wrapper')}>
-            <textarea
+            <TextareaAutosize
               className={cx('note-footer-category')}
               value={category}
               onChange={handleChangeCategory}

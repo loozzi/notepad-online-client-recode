@@ -1,0 +1,19 @@
+.all {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+
+    button {
+        padding: 24px;
+        background-color: transparent;
+        border: none;
+        font-size: 18px;
+
+        span {
+            text-decoration: underline;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
