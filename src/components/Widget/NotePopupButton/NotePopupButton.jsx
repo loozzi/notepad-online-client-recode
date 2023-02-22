@@ -9,18 +9,25 @@ import styles from './NotePopupButton.module.scss';
 import { history } from '../../../utils/history';
 import noteApi from '../../../api/noteApi';
 import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../../app/hook';
+import { homeActions } from '../../Layout/Home/HomeSlice';
 
 const cx = classNames.bind(styles);
 
 function NotePopupButton(props) {
-  const { permalink } = props;
+  const { permalink, isProtected } = props;
+
+  const dispatch = useAppDispatch();
 
   const handleEditClick = () => {
     history.push(`/edit/${permalink}`);
   };
 
   const handleDeleteClick = () => {
-    const password = prompt('Note password?');
+    let password = '';
+    if (isProtected) {
+      password = prompt('Note password?');
+    }
 
     const fetchDelete = async () => {
       const resData = await noteApi.delete({
@@ -36,6 +43,7 @@ function NotePopupButton(props) {
     };
 
     fetchDelete();
+    dispatch(homeActions.fetchData());
   };
 
   return (

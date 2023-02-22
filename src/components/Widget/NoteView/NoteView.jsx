@@ -195,7 +195,10 @@ function NoteView(props) {
               <span className={cx('note-header-btn-text')}>Share</span>
             </button>
             {currentUser.username === data.username && (
-              <NotePopupButton permalink={data.permalink} />
+              <NotePopupButton
+                permalink={data.permalink}
+                isProtected={data.isProtected}
+              />
             )}
           </div>
         )}

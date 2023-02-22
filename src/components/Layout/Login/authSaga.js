@@ -64,7 +64,7 @@ function* handleLogin(payload) {
 
 function* handleLogout() {
   yield tokenApi.delete({
-    refreshToken: axiosClient.getLocalRefreshToken(),
+    refreshToken: localStorage.getItem('refreshToken') || '',
   });
 }
 

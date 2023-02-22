@@ -4,7 +4,8 @@ import { useParams } from 'react-router';
 import Header from '../../Widget/Header/Header';
 import NoteView from '../../Widget/NoteView';
 import styles from './View.module.scss';
-
+import Input from '../../Widget/Input';
+import Button from '../../Widget/Button';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import noteApi from '../../../api/noteApi';
@@ -24,52 +25,70 @@ function View(props) {
 
   const currentUser = useAppSelector(selectCurrentUser);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await noteApi.get({
-        permalink: permalink,
-        password: password,
-      });
-      if (data.code === 200) {
-        setPasswordConfirm(true);
-        setCurrentNote(data.elements.note);
-        document.title = data.elements.note.title;
-        toast.success(data.message);
-      } else if (data.code === 401) {
-        setCurrentNote({
-          username: data.elements.note.username,
-          title: data.elements.note.title,
-          body: 'Content is locked',
-          permalink: currentNote,
-          tags: 'Category is locked',
-          created_at: data.elements.note.created_at,
-          view: data.elements.note.view,
-        });
-        document.title = data.elements.note.title;
-        toast.warning(data.message);
-        setPasswordConfirm(false);
-        const pwd = prompt('Enter your note password');
-        setPassword(pwd);
-      } else {
-        setCurrentNote({
-          username: '',
-          title: '',
-          body: '',
-          permalink: currentNote,
-          tags: '',
-          created_at: Date.now(),
-          view: 0,
-        });
-        history.push(`/${routes.HOME}`);
-        toast.error(data.message);
-      }
-    };
+  const handleOnChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleOnSubmitPassword = () => {
     fetch();
-  }, [password]);
+  };
+
+  const fetch = async () => {
+    const data = await noteApi.get({
+      permalink: permalink,
+      password: password,
+    });
+    document.title = data.elements.note.title || "Can't load note";
+    if (data.code === 200) {
+      setCurrentNote(data.elements.note);
+      toast.success('Succcess');
+    } else if (data.code === 401) {
+      setCurrentNote({
+        username: data.elements.note.username,
+        title: data.elements.note.title,
+        body: 'Content is locked',
+        permalink: currentNote,
+        tags: 'Category is locked',
+        created_at: data.elements.note.created_at,
+        view: data.elements.note.view,
+        isProtected: true,
+      });
+      document.title = data.elements.note.title;
+      toast.warning(data.message);
+    } else {
+      setCurrentNote({
+        username: '',
+        title: '',
+        body: '',
+        permalink: currentNote,
+        tags: '',
+        created_at: Date.now(),
+        view: 0,
+        isProtected: true,
+      });
+      toast.error(data.message);
+      history.push(`/${routes.HOME}`);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
   return (
     <>
       <Header />
       <div className={cx('view')}>
+        {!!currentNote.isProtected && (
+          <div className={cx('view-controller')}>
+            <Input
+              type="password"
+              placeholder="Enter password note..."
+              value={password}
+              onChange={handleOnChangePassword}
+            />
+            <Button primary label="Submit" onClick={handleOnSubmitPassword} />
+          </div>
+        )}
         <NoteView data={currentNote} onlyView />
       </div>
     </>

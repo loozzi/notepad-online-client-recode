@@ -32,7 +32,10 @@ function ItemController(props) {
   return (
     <div className={cx('item')} key={idx}>
       <div className={cx('item-left')}>
-        <NotePopupButton permalink={item.permalink} />
+        <NotePopupButton
+          permalink={item.permalink}
+          isProtected={item.isProtected}
+        />
       </div>
       <div
         className={cx('item-right')}

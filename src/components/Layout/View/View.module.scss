@@ -1,3 +1,7 @@
 .view {
     padding-top: var(--header-height);
+    &-controller {
+        display: flex;
+        flex-direction: column;
+    }
 }

@@ -56,18 +56,15 @@ const noteApi = {
     );
   },
   delete({ permalink, password }) {
-    const url = baseUrl;
     const accessToken = Cookies.get('accessToken') || '';
-    return axiosClient.delete(
-      url,
-      {
+    const url = baseUrl; // + `?accessToken=${accessToken}`;
+    return axiosClient.delete(url, {
+      params: {
         permalink: permalink,
         password: password,
+        accessToken: accessToken,
       },
-      {
-        params: { accessToken: accessToken },
-      }
-    );
+    });
   },
 };
 

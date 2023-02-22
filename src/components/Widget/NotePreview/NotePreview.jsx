@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './NotePreview.module.scss';
-import { history } from '../../../utils/history';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import noteApi from '../../../api/noteApi';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +30,28 @@ function NotePreview(props) {
     return str.split(' ').slice(0, 100).join(' ') + '...';
   };
 
+  const handleDeleteClick = () => {
+    let password = '';
+    if (data.isProtected) {
+      password = prompt('Note password?');
+    }
+
+    const fetchDelete = async () => {
+      const resData = await noteApi.delete({
+        permalink: data.permalink,
+        password: password.trim(),
+      });
+
+      if (resData.code === 200) {
+        toast.success(resData.message);
+      } else {
+        toast.error(resData.message);
+      }
+    };
+
+    fetchDelete();
+  };
+
   return (
     <div className={cx('note-preview')}>
       <div className={cx('note-preview-header')}>
@@ -42,6 +65,12 @@ function NotePreview(props) {
           {reFormatTime(data.created_at)} - {data.view} views
         </div>
         <div className={cx('note-preview-footer-wrapper')}>
+          <div
+            className={cx('note-preview-footer--link')}
+            onClick={handleDeleteClick}
+          >
+            Delete
+          </div>
           <NavLink
             to={`/edit/${data.permalink}`}
             className={cx('note-preview-footer--link')}
