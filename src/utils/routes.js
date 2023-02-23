@@ -11,6 +11,7 @@ const routes = {
   EDIT: 'edit/:permalink',
   VIEW: 'view/:permalink',
   CATEGORY: 'category',
+  PROFILE: 'profile',
 };
 
 export default routes;

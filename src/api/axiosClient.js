@@ -1,12 +1,16 @@
 import axios from 'axios';
 import tokenApi from './tokenApi';
 import cookie from 'react-cookies';
+import { history } from '../utils/history';
+import routes from '../utils/routes';
+import { useAppDispatch } from '../app/hook';
+import { authActions } from '../components/Layout/Login/authSlice';
 
 axios.defaults.withCredentials = true;
 
 const axiosClient = axios.create({
-  baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
-  // baseURL: 'http://localhost:3001/api/v1/',
+  // baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
+  baseURL: 'http://localhost:3001/api/v1/',
   headers: {
     'content-type': 'application/json',
   },
@@ -40,6 +44,9 @@ axiosClient.interceptors.request.use(
         } else {
           localStorage.removeItem('refreshToken');
           document.cookie = '';
+          history.push(`/${routes.LOGIN}`);
+          const dispatch = useAppDispatch();
+          dispatch(authActions.logout());
         }
       }
     } catch (err) {

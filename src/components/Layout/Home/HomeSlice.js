@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initState = {
-  loadding: false,
+  loading: false,
   totalNotes: 0,
   notes: [],
 };
@@ -11,15 +11,15 @@ const homeSlice = createSlice({
   initialState: initState,
   reducers: {
     fetchData(state) {
-      state.loadding = true;
+      state.loading = true;
     },
     fetchDataSuccess(state, actions) {
-      state.loadding = false;
+      state.loading = false;
       state.totalNotes = actions.payload.totalNotes;
       state.notes = actions.payload.notes;
     },
     fetchDataFailed(state) {
-      state.loadding = false;
+      state.loading = false;
     },
 
     setTotalNotes(state, actions) {
@@ -35,7 +35,7 @@ const homeSlice = createSlice({
 export const homeActions = homeSlice.actions;
 
 // Sellectors
-export const selectLoading = (state) => state.home.loadding;
+export const selectLoading = (state) => state.home.loading;
 export const selectTotalNotes = (state) => state.home.totalNotes;
 export const selectNotes = (state) => state.home.notes;
 

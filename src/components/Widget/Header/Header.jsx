@@ -66,7 +66,7 @@ function Header(props) {
             })}
           >
             <NavLink
-              to={`/${currentUser.username}`}
+              to={`/${routes.PROFILE}`}
               className={cx('header-right-dropdown--link')}
             >
               <FontAwesomeIcon

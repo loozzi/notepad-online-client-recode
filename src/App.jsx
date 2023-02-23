@@ -13,6 +13,7 @@ import View from './components/Layout/View';
 import Category from './components/Layout/Category';
 import All from './components/Layout/All';
 import routes from './utils/routes';
+import Account from './components/Layout/Account/Account';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path={routes.EDIT} element={<Edit />} />
           <Route path={routes.CATEGORY} element={<Category />} />
           <Route path={routes.ALL} element={<All />} />
+          <Route path={routes.PROFILE} element={<Account />} />
           <Route path={routes.LOGOUT} element={<Logout />} />
         </Route>
 

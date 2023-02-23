@@ -35,9 +35,13 @@ const userApi = {
   changeAvatar({ newAvatar }) {
     const url = baseUrl + 'avatar';
     const accessToken = Cookies.get('accessToken') || '';
-    return axiosClient.put(url, {
-      newAvatar: newAvatar,
-    });
+    return axiosClient.put(
+      url,
+      {
+        newAvatar: newAvatar,
+      },
+      { params: { accessToken: accessToken } }
+    );
   },
   changeEmail({ newEmail }) {
     const url = baseUrl + 'email';
