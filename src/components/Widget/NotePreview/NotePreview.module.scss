@@ -4,6 +4,12 @@
     padding: 12px;
     border-radius: 4px;
 
+    &:hover {
+        border-color: var(--color7);
+        box-shadow: 0 0 4px rgba($color: #000000, $alpha: 0.6);
+        cursor: pointer;
+    }
+
     &-header {
         font-size: 24px;
         a {

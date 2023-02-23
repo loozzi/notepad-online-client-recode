@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import noteApi from '../../../api/noteApi';
 import { useState } from 'react';
+import { history } from '../../../utils/history';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +58,12 @@ function NotePreview(props) {
 
   if (!isDeleted) {
     return (
-      <div className={cx('note-preview')}>
+      <div
+        className={cx('note-preview')}
+        onClick={() => {
+          history.push(`/view/${data.permalink}`);
+        }}
+      >
         <div className={cx('note-preview-header')}>
           <NavLink to={`/view/${data.permalink}`}>{data.title}</NavLink>
         </div>
