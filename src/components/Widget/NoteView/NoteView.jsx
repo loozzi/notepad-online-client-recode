@@ -61,7 +61,9 @@ function NoteView(props) {
 
   const handleShareClick = () => {
     const urlShare = `${window.location.origin}/view/${data.permalink}`;
-    prompt('Copy this link to share note', urlShare);
+    // prompt('Copy this link to share note', urlShare);
+    navigator.clipboard.writeText(urlShare);
+    toast.success('Copy success');
   };
 
   const handleCreateNote = async () => {

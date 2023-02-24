@@ -21,9 +21,8 @@ function View(props) {
   const permalink = params.permalink;
   const [currentNote, setCurrentNote] = useState({});
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState(false);
 
-  const currentUser = useAppSelector(selectCurrentUser);
+  // const currentUser = useAppSelector(selectCurrentUser);
 
   const handleOnChangePassword = (e) => {
     setPassword(e.target.value);
@@ -66,7 +65,6 @@ function View(props) {
         isProtected: true,
       });
       toast.error(data.message);
-      history.push(`/${routes.HOME}`);
     }
   };
 

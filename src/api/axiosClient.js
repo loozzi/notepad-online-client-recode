@@ -19,12 +19,14 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   async (config) => {
-    const whiteList = ['login', 'register', 'refreshToken'];
+    const whiteList = ['login', 'register', 'refreshToken', 'note'];
     let flag = false;
 
     whiteList.forEach((item) => {
       if (config.url.indexOf(item) >= 0) flag = true;
     });
+
+    console.log(config.url);
 
     if (flag) {
       return config;
