@@ -9,8 +9,8 @@ import { authActions } from '../components/Layout/Login/authSlice';
 axios.defaults.withCredentials = true;
 
 const axiosClient = axios.create({
-  baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
-  // baseURL: 'http://localhost:3001/api/v1/',
+  // baseURL: 'https://vast-erin-tuna-suit.cyclic.app/api/v1/',
+  baseURL: 'http://localhost:3001/api/v1/',
   headers: {
     'content-type': 'application/json',
   },
@@ -35,12 +35,8 @@ axiosClient.interceptors.request.use(
         const refreshToken = localStorage.getItem('refreshToken') || '';
         const res = await tokenApi.generate({ refreshToken });
         if (res.code === 200) {
-          // document.cookie = `accessToken=${res.elements.accessToken};max-age=1800;domain=.vast-erin-tuna-suit.cyclic.app;path=/`;
-          cookie.save('accessToken', res.elements.accessToken, {
-            maxAge: 1800,
-            domain: '.vast-erin-tuna-suit.cyclic',
-            path: '/',
-          });
+          localStorage.setItem('refreshToken', refreshToken);
+          document.cookie = `accessToken=${res.elements.accessToken};max-age=1800;samesite`;
         } else {
           localStorage.removeItem('refreshToken');
           document.cookie = '';

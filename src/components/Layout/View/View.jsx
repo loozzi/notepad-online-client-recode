@@ -41,7 +41,6 @@ function View(props) {
     document.title = data.elements.note.title || "Can't load note";
     if (data.code === 200) {
       setCurrentNote(data.elements.note);
-      toast.success('Succcess');
     } else if (data.code === 401) {
       setCurrentNote({
         username: data.elements.note.username,

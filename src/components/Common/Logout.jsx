@@ -16,7 +16,6 @@ function Logout(props) {
         .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
     });
     dispatch(authActions.logout());
-    toast.success(`User logged out successfully`);
     setTimeout(() => {
       history.push(`/${routes.LOGIN}`);
     }, 3000);

@@ -25,6 +25,8 @@ function Account(props) {
   const [newPassword, setNewPassword] = useState('');
   const [avatar, setAvatar] = useState(currentUser.avatar);
 
+  document.title = 'Edit profile';
+
   const handleCallApi = (type, payload) => {
     const ahihi = new Promise(async (resolve, reject) => {
       if (type === 'email') {

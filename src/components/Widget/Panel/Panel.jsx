@@ -25,7 +25,6 @@ function Panel(props) {
       const data = await noteApi.get({ permalink: currentNote, password: '' });
       if (data.code === 200) {
         setCurrentNoteData(data.elements.note);
-        toast.success('Successfully');
       } else if (data.code === 401) {
         setCurrentNoteData({
           username: currentUser.username,
@@ -36,7 +35,6 @@ function Panel(props) {
           created_at: data.elements.note.created_at,
           view: data.elements.note.view,
         });
-        toast.warning('Note is protected');
       } else {
         setCurrentNoteData({
           username: '',
@@ -47,7 +45,6 @@ function Panel(props) {
           created_at: Date.now(),
           view: 0,
         });
-        toast.error(data.message);
       }
     };
     if (!!currentUser && currentNote !== '') fetch();

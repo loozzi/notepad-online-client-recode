@@ -83,7 +83,6 @@ function* watchLoggingFlow() {
         yield take(authActions.logout.type);
         yield call(handleLogout);
       } else {
-        localStorage.removeItem('refreshToken');
         yield put(authActions.logout());
       }
     }

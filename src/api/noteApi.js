@@ -20,6 +20,13 @@ const noteApi = {
       params: { page: page, limit: limit, accessToken: accessToken },
     });
   },
+  search({ q }) {
+    const url = baseUrl + 'search';
+    return axiosClient.get(url, {
+      params: { q: q },
+    });
+  },
+
   create({ title, body, tags, password }) {
     const url = baseUrl;
     const accessToken = Cookies.get('accessToken') || '';
